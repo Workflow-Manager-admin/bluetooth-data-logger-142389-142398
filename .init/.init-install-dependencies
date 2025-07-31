@@ -1,0 +1,4 @@
+{
+    "command": "npm install",
+    "working_directory": "/home/kavia/workspace/code-generation/bluetooth-data-logger-142389-142398/bluetooth_data_logger_frontend"
+}
