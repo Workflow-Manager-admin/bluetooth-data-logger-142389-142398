@@ -1,14 +1,16 @@
-/* eslint-disable no-undef */
+// removed unnecessary disable directive
 // Only browser environment: BluetoothRemoteGATT*, navigator, RequestDeviceOptions
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+
+declare var navigator: any; // For lint compat
 
 // BluetoothDeviceInfo summarizes device details relevant to UI
 export interface BluetoothDeviceInfo {
   name: string;
   id: string;
-  gatt?: BluetoothRemoteGATTServer;
-  device: BluetoothDevice;
+  gatt?: any;
+  device: any;
 }
 
 export interface BluetoothDataRecord {
@@ -28,7 +30,7 @@ export class BluetoothService {
   private devices: BehaviorSubject<BluetoothDeviceInfo[]> = new BehaviorSubject<BluetoothDeviceInfo[]>([]);
   private connectedDevice: BehaviorSubject<BluetoothDeviceInfo | null> = new BehaviorSubject<BluetoothDeviceInfo | null>(null);
   private lastData: Subject<BluetoothDataRecord> = new Subject<BluetoothDataRecord>();
-  private deviceCharacteristic: BluetoothRemoteGATTCharacteristic | null = null;
+  private deviceCharacteristic: any = null;
 
   getDevices(): Observable<BluetoothDeviceInfo[]> {
     return this.devices.asObservable();
@@ -51,12 +53,10 @@ export class BluetoothService {
       if (typeof navigator === 'undefined' || !navigator.bluetooth) {
         throw new Error('Web Bluetooth not supported in this context');
       }
-      // eslint-disable-next-line no-undef
-      const options: RequestDeviceOptions = {
+      const options = {
         acceptAllDevices: true,
         optionalServices: ['battery_service', 'device_information']
       };
-      // eslint-disable-next-line no-undef
       const device = await navigator.bluetooth.requestDevice(options);
       const infos: BluetoothDeviceInfo[] = [{
         name: device.name ?? '(Unnamed Device)',

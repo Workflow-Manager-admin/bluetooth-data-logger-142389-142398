@@ -4,7 +4,7 @@
       [availableDevices]="availableDevices"
       [connectedDevice]="connectedDevice"
       (discoverClicked)="discoverDevices()"
-      (connect)="connectDevice($event)"
+      (connect)="connectDevice($event as any)"
       (disconnect)="disconnectDevice()">
     </app-sidebar>
   </aside>

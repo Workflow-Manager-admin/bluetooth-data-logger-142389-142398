@@ -18,14 +18,19 @@ export class AppComponent implements OnInit {
   sessions: LogSession[] = [];
   currentSession: LogSession | null = null;
 
+  // Restore DI usage and reference
+  // Mark accessed so linter doesn't complain; actual use is throughout class as this.bt/this.logger
   constructor(
     public bt: BluetoothService,
     public logger: LogService
-  ) {}
+  ) {
+    void bt;
+    void logger;
+  }
 
   ngOnInit() {
-    this.bt.getDevices().subscribe(devs => this.availableDevices = devs);
-    this.bt.getConnectedDevice().subscribe(dev => {
+    this.bt.getDevices().subscribe((devs: BluetoothDeviceInfo[]) => this.availableDevices = devs);
+    this.bt.getConnectedDevice().subscribe((dev: BluetoothDeviceInfo | null) => {
       this.connectedDevice = dev;
       if (dev) {
         this.logger.startSession(`Session (${dev.name})`);
@@ -87,29 +92,30 @@ export class AppComponent implements OnInit {
     ];
     return rows.join('\n');
   }
+  // Disable lint for env globals in this function (browser only)
+  /* eslint-disable-next-line */
   private downloadFile(data: string, filename: string, type: string) {
-    // Download logic is only used in browser environments
-    // @ts-ignore
-    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-      // @ts-ignore
-      const blob = new Blob([data], {type});
-      // @ts-ignore
-      const url = window.URL.createObjectURL(blob);
-      // @ts-ignore
-      const a = document.createElement('a');
+    // Use globalThis for universal context to avoid no-undef
+    const win = typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : undefined);
+    const doc = typeof document !== 'undefined' ? document : (win ? win.document : undefined);
+    if (win && doc) {
+      const blob = new Blob([data], { type });
+      const url = win.URL.createObjectURL(blob);
+      const a = doc.createElement('a');
       a.href = url;
       a.download = filename;
       a.style.display = 'none';
-      // @ts-ignore
-      document.body.appendChild(a);
+      doc.body.appendChild(a);
       a.click();
-      // @ts-ignore
-      setTimeout(() => {
-        // @ts-ignore
-        document.body.removeChild(a);
-        // @ts-ignore
-        window.URL.revokeObjectURL(url);
-      }, 0);
+      if (typeof win.setTimeout === 'function') {
+        win.setTimeout(() => {
+          doc.body.removeChild(a);
+          win.URL.revokeObjectURL(url);
+        }, 0);
+      } else {
+        doc.body.removeChild(a);
+        win.URL.revokeObjectURL(url);
+      }
     }
   }
 }

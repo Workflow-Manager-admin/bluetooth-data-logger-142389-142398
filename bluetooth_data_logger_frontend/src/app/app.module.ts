@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+
+// Use direct imports for all components instead of index.ts
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LogHistoryComponent } from './components/log-history/log-history.component';
 import { RealtimeChartComponent } from './components/realtime-chart/realtime-chart.component';
@@ -17,6 +19,7 @@ import { RealtimeChartComponent } from './components/realtime-chart/realtime-cha
   imports: [
     BrowserModule,
     FormsModule
+    // No need to import CommonModule here; BrowserModule already brings it
   ],
   providers: [],
   bootstrap: [AppComponent]
