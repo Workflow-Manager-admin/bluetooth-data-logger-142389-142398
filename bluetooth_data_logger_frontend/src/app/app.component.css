@@ -1,16 +1,54 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.dashboard {
   min-height: 100vh;
-  background-color: #ffffff;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 1fr min-content;
+  grid-template-areas:
+    "sidebar main"
+    "sidebar log";
+  background: #f5f8fa;
+}
+aside {
+  grid-area: sidebar;
+  min-height: 0;
+  border-right: 1px solid #ececec;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  grid-area: main;
+  padding: 2.5rem 2.5rem 1rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .9rem;
+}
+.header .conn-indicator {
+  background: #e9f6ff;
+  color: #1976d2;
+  padding: .28rem .76rem;
+  border-radius: 4px;
+  font-size: .99rem;
+  font-weight: 500;
+}
+.header .devname {
+  color: #424242;
+  font-weight: 500;
+  margin-left: .3rem;
 }
 
-h1 {
-  color: #1976d2;
-  font-size: 3rem;
-  font-weight: 500;
-  margin: 0;
-  text-align: center;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+.log-history-section {
+  grid-area: log;
+  background: #fafbfc;
+  border-top: 1px solid #ececec;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
 }

@@ -1,0 +1,21 @@
+<div class="log-history">
+  <div class="head">
+    <h3>Log History</h3>
+    <button class="accent" type="button" (click)="handleClear()">Clear</button>
+    <button class="primary" type="button" (click)="handleExport('csv')">Export CSV</button>
+    <button class="primary" type="button" (click)="handleExport('json')">Export JSON</button>
+  </div>
+  <div *ngIf="!sessions || !sessions.length" class="placeholder">
+    No sessions recorded yet.
+  </div>
+  <div *ngFor="let s of sessions" class="session-block">
+    <div class="s-head">
+      {{ s.name }} — {{ s.started | date:'short' }} 
+      <span *ngIf="s.ended">– {{ s.ended | date:'shortTime' }}</span>
+      <span *ngIf="currentSession && currentSession.id === s.id" class="badge">Active</span>
+    </div>
+    <div class="s-data">
+      Total records: {{ s.data.length }}
+    </div>
+  </div>
+</div>

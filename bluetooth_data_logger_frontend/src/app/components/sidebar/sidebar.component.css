@@ -1,0 +1,35 @@
+.sidebar {
+  min-width: 220px;
+  background: #f2f6fb;
+  border-right: 1px solid #ececec;
+  padding: 1rem;
+  color: #424242;
+}
+.sidebar h2 {
+  font-size: 1.1rem;
+  color: #1976d2;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+.sidebar li {
+  margin-bottom: .4rem;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+button {
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  padding: .3rem .7rem;
+  cursor: pointer;
+  background: #eee;
+  transition: background .15s;
+}
+button.primary { background: #1976d2; color: #fff; }
+button.accent  { background: #ff4081; color: #fff; }
+button.secondary { background: #424242; color: #fff; }
+button:hover { opacity: 0.95; }

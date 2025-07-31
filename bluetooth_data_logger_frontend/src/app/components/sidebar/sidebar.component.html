@@ -1,0 +1,23 @@
+<div class="sidebar">
+  <h2>Devices</h2>
+  <button class="primary" type="button" (click)="handleDiscover()">Discover Devices</button>
+  <ul>
+    <li *ngFor="let dev of availableDevices">
+      <span>{{ dev.name }}</span>
+      <button 
+        class="accent"
+        type="button"
+        *ngIf="!connectedDevice || dev.id !== connectedDevice.id" 
+        (click)="handleConnect(dev)">
+        Connect
+      </button>
+      <button 
+        class="secondary"
+        type="button"
+        *ngIf="connectedDevice && dev.id === connectedDevice.id"
+        (click)="handleDisconnect()">
+        Disconnect
+      </button>
+    </li>
+  </ul>
+</div>
