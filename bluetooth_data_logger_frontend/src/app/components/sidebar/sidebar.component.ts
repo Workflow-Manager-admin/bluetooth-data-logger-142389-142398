@@ -18,6 +18,7 @@ export class SidebarComponent {
 
   // Handles device menu actions
   handleConnect(device: BluetoothDeviceInfo) {
+    // Make sure it emits the object, not the DOM event
     this.connect.emit(device);
   }
   handleDisconnect() {
